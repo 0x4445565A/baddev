@@ -91,6 +91,7 @@ function theme_page_login() {
    }
    else {
      $body .= 'logged in';
+     common_login_user($result[0]['uid']);
    }
   }
   $body .= '<form action="?p=login" method="POST" class="form-signin">
@@ -119,4 +120,10 @@ function theme_page_list() {
               </tr>';
   }
   $body .= '</tbody></table>';
+}
+
+function theme_page_logout() {
+  global $body;
+  session_destroy();
+  $body .= "You are now logged out.";
 }

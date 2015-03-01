@@ -37,7 +37,6 @@ $navigation = array(
     ),
   ),
 );
-
 function common_attach_scripts($s = array()) {
   global $scripts;
   foreach ($s as $type => $script) {
@@ -74,11 +73,22 @@ function common_attach_includes() {
 
 function common_bootstrap() {
   global $hooks;
+  global $navigation;
+  $session_id = session_id();
+  if (empty($session_id)) session_start();
   common_attach_includes();
+  print_r($_SESSION);
+  if (isset($_SESSION['uid'])) {
+    unset($navigation['Login'], $navigation['Register']);
+  }
   foreach ($hooks as $hook) {
     if (function_exists($hook . '_bootstrap')) {
       $func = $hook . '_bootstrap';
       $func();
     }
   }
+}
+
+function common_login_user($uid) {
+  $_SESSION['uid'] = $uid;
 }
