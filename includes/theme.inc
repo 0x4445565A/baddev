@@ -43,7 +43,10 @@ function theme_header() {
   global $navigation;
   $header .= '
     <nav class="navbar navbar-inverse">
-    <div class="contianer-fluid"> 
+    <div class="contianer-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">BaDDeV</a>
+    </div> 
     <div class="collapse navbar-collapse" id="nav">
       <ul class="nav navbar-nav">';
       foreach ($navigation as $text => $nav) {
