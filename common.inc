@@ -4,6 +4,7 @@
  */
 $user = NULL;
 $hooks = array();
+$connection = NULL;
 $title = '';
 $scripts = '';
 $css = '';
@@ -30,6 +31,7 @@ $navigation = array(
     ),
   ),
 );
+
 function common_attach_scripts($s = array()) {
   global $scripts;
   foreach ($s as $type => $script) {

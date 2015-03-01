@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);
+include_once('settings.php');
 include_once('common.inc');
 common_bootstrap();
 $title = $title == '' ? "#AKHax presents BaDDeV" : $title;
