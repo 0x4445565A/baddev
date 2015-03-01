@@ -1,7 +1,7 @@
 <?php
 function mysql_bootstrap() {
   mysql_database_connect();
-  $query = mysql_database_query("show databases;");
+  $query = mysql_database_query("SELECT * FROM users;");
   print_r(mysql_database_get_results($query));
 }
 
@@ -13,6 +13,7 @@ function mysql_database_connect() {
   if (!$connection) {
     die('connection failed: ' . mysqli_connect_error());
   }
+  mysqli_select_db($connection, $mysql['database']);
 }
 
 function mysql_database_query($sql) {
