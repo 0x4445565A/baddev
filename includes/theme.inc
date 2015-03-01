@@ -80,15 +80,22 @@ function theme_page_404() {
 
 function theme_page_login() {
   global $body;
-  if (isset($_POST['username'], $_POST['password'])) {
-    print_r($_POST);
-    $body .= '<div class="alert alert-danger" role="alert">
-     <b>Incorrect username or password</b> Please check your input and try again.
-   </div>';
+  if (isset($_POST['mail'], $_POST['password'])) {
+    $sql = "SELECT uid FROM users WHERE mail='{$_POST['mail']}' AND password=MD5('{$_POST['password']}');";
+    $query = mysql_database_query($sql);
+    $result = mysql_database_get_results($query);
+    if (empty($result)) {
+      $body .= '<div class="alert alert-danger" role="alert">
+                 <b>Incorrect username or password</b> Please check your input and try again.
+                </div>';
+   }
+   else {
+     $body .= 'logged in';
+   }
   }
   $body .= '<form action="?p=login" method="POST" class="form-signin">
             <h2 class="form-signin-heading">Please sign in</h2>           
-            <input type="text" name="username" class="form-control" placeholder="Username">
+            <input type="text" name="mail" class="form-control" placeholder="Username">
             <br>
             <input type="password" name="password" class="form-control" placeholder="Password">
             <br>
