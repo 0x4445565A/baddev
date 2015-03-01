@@ -18,6 +18,12 @@ $navigation = array(
       'p' => 'index',
     ),
   ),
+  'Users' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => 'list',
+    ),
+  ),
   'Login' => array(
     'base' => '/',
     'query' => array(

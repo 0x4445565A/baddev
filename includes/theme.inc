@@ -96,3 +96,20 @@ function theme_page_login() {
             </form>';
 }
 
+function theme_page_list() {
+  global $body;
+  $query = mysql_database_query("SELECT uid, mail, bio FROM users;");
+  $results = mysql_database_get_results($query);
+  $body .= '<table class="table">';
+  $body .= '<thead><tr>
+              <th>User Mail</th>
+              <th>User Bio</th>
+            </tr></thead><tbody>';
+  foreach ($results as $result) {
+    $body .= '<tr class="uid-' . $result['uid'] . '">
+                <td>' . $result['mail']  . '</td>
+                <td>' . $result['bio']  . '</td>
+              </tr>';
+  }
+  $body .= '</tbody></table>';
+}

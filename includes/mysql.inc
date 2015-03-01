@@ -1,8 +1,6 @@
 <?php
 function mysql_bootstrap() {
   mysql_database_connect();
-  $query = mysql_database_query("SELECT * FROM users;");
-  print_r(mysql_database_get_results($query));
 }
 
 function mysql_database_connect() {
