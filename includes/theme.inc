@@ -92,6 +92,7 @@ function theme_page_login() {
    else {
      $body .= 'logged in';
      common_login_user($result[0]['uid']);
+     header('Location: /');
    }
   }
   $body .= '<form action="?p=login" method="POST" class="form-signin">

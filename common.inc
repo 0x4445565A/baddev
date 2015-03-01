@@ -77,9 +77,14 @@ function common_bootstrap() {
   $session_id = session_id();
   if (empty($session_id)) session_start();
   common_attach_includes();
-  print_r($_SESSION);
   if (isset($_SESSION['uid'])) {
     unset($navigation['Login'], $navigation['Register']);
+    $navigation['Logout'] = array(
+      'base' => '/',
+      'query' => array(
+        'p' => 'logout',
+      ),
+    );
   }
   foreach ($hooks as $hook) {
     if (function_exists($hook . '_bootstrap')) {
