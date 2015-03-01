@@ -10,7 +10,26 @@ $css = '';
 $header = '';
 $body = '';
 $footer = '';
-
+$navigation = array(
+  'Home' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => 'index',
+    ),
+  ),
+  'Login' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => 'login',
+    ),
+  ),
+  'Register' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => 'register',
+    ),
+  ),
+);
 function common_attach_scripts($s = array()) {
   global $scripts;
   foreach ($s as $type => $script) {

@@ -11,8 +11,10 @@ $title = $title == '' ? "#AKHax presents BaDDeV" : $title;
     <?php print $css; ?>
   </head>
   <body>
+    <div class="container">
     <?php print $header; ?>
     <?php print $body; ?>
+    </div>
     <?php print $footer; ?>
   </body>
 </html>
