@@ -24,6 +24,12 @@ $navigation = array(
       'p' => 'list',
     ),
   ),
+  'Calendar' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => 'cal', 
+    ),
+  ),
   'Login' => array(
     'base' => '/',
     'query' => array(

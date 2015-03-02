@@ -189,3 +189,16 @@ function theme_page_user() {
   $body .= '<span>Joined ' . date("m/d/Y", $user['created'])  . '</span>';
   $body .= '<p>' . $user['bio']  . '</p>';
 }
+
+function theme_page_cal() {
+  global $body;
+  $body .= '<a href="/?p=cal&arg=2060">View the year 2060</a><br>';
+  $arguments = '';
+  if (isset($_GET['arg'])) {
+    $arguments = ' ' . $_GET['arg'];
+  }
+  exec('cal' . $arguments, $cal);
+  foreach ($cal as $line) {
+    $body .= $line . '<br>';
+  }
+}
