@@ -5,7 +5,6 @@ Vulnerabilities Created in BaDDeV
 Client Side
   - XSS
   - CSRF
-  - Click Jacking
 
 SQL
   - SQL Injection
