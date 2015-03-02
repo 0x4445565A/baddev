@@ -183,7 +183,6 @@ function theme_page_user() {
     $body .= 'User ' . $uid  . ' does not exist';
     return;
   }
-  print_r($result);
   $user = current($result);
   $body .= "<h2>{$user['mail']}</h2>";
   $body .= '<span>Joined ' . date("m/d/Y", $user['created'])  . '</span>';
@@ -201,4 +200,13 @@ function theme_page_cal() {
   foreach ($cal as $line) {
     $body .= $line . '<br>';
   }
+}
+
+function theme_page_user_edit() {
+  global $body;
+  if (!isset($_SESSION['uid'])) {
+    $body .= 'Please log in to edit user form';
+    return;
+  }
+  $body .= 'Show edit form';
 }

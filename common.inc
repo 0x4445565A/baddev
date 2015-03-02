@@ -85,6 +85,12 @@ function common_bootstrap() {
   common_attach_includes();
   if (isset($_SESSION['uid'])) {
     unset($navigation['Login'], $navigation['Register']);
+    $navigation['Edit Profile'] = array(
+      'base' => '/',
+      'query' => array(
+        'p' => 'user-edit',
+      ),
+    );
     $navigation['Logout'] = array(
       'base' => '/',
       'query' => array(
