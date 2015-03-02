@@ -156,7 +156,7 @@ function theme_page_list() {
   foreach ($results as $result) {
     $body .= '<tr class="uid-' . $result['uid'] . '">
                 <td><a href="/?p=user&u=' . $result['uid']  . '">' . $result['mail']  . '</a></td>
-                <td>' . $result['bio']  . '</td>
+                <td>' . htmlentities($result['bio'])  . '</td>
               </tr>';
   }
   $body .= '</tbody></table>';
@@ -204,12 +204,13 @@ function theme_page_cal() {
 
 function theme_page_user_edit() {
   global $body;
+  global $connection;
   if (!isset($_SESSION['uid'])) {
     $body .= 'Please log in to edit user form';
     return;
   }
   if (isset($_POST['bio']) && !empty($_POST['bio'])) {
-    mysql_database_query('UPDATE users SET bio="' . $_POST['bio'] . '" WHERE uid="' . $_SESSION['uid']  . '"');
+    mysql_database_query('UPDATE users SET bio="' . $connection->escape_string($_POST['bio']) . '" WHERE uid="' . $_SESSION['uid']  . '"');
     $body .= '<div class="alert alert-success" role="alert">User bio updated</div>';
   }
 
