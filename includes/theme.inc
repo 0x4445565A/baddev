@@ -209,4 +209,8 @@ function theme_page_user_edit() {
     return;
   }
   $body .= 'Show edit form';
+  $sql = "SELECT * FROM users WHERE uid={$_SESSION['uid']}";
+  $query = mysql_database_query($sql);
+  $result = mysql_database_get_results($query);
+  print_r($result);
 }
