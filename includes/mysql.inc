@@ -6,17 +6,15 @@ function mysql_bootstrap() {
 function mysql_database_connect() {
   global $mysql;
   global $connection;
-  $connection = mysqli_connect($mysql['server'], $mysql['user'], $mysql['password']);
-
-  if (!$connection) {
-    die('connection failed: ' . mysqli_connect_error());
+  $connection = new mysqli($mysql['server'], $mysql['user'], $mysql['password'], $mysql['database']);
+  if ($connection->connect_errno) {
+    echo "Failed to connect to MySQL: (" . $connection->connect_errno . ") " . $connection->error;
   }
-  mysqli_select_db($connection, $mysql['database']);
 }
 
 function mysql_database_query($sql) {
   global $connection;
-  return mysqli_query($connection, $sql);
+  return $connection->query($sql);
 }
 
 function mysql_database_get_results($query) {

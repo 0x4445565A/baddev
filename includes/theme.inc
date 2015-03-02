@@ -176,7 +176,7 @@ function theme_page_user() {
   }
   $uid = $_GET['u'];
   $sql = "SELECT uid, mail, bio, created FROM users WHERE uid='{$uid}';";
-  print '<br>' . $sql;
+  print $sql;
   $query = mysql_database_query($sql);
   $result = mysql_database_get_results($query);
   if (empty($result)) {
