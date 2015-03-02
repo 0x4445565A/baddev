@@ -52,8 +52,13 @@ function theme_header() {
       foreach ($navigation as $text => $nav) {
         $header .= theme_build_nav_link($nav, $text);
       }
-    $header .= '</ul>
-    </div>
+    $header .= '</ul>';
+    if (isset($_SESSION['uid'])) {
+      $query = mysql_database_query("SELECT mail FROM users WHERE uid='{$_SESSION['uid']}'");
+      $result = mysql_database_get_results($query);
+      $header .= '<p class="navbar-text navbar-right">Logged in as ' . $result[0]['mail']  . '&nbsp;&nbsp;</p>';
+    }
+    $header .= '</div>
     </div>
     </nav>
   ';
@@ -119,7 +124,7 @@ function theme_page_list() {
             </tr></thead><tbody>';
   foreach ($results as $result) {
     $body .= '<tr class="uid-' . $result['uid'] . '">
-                <td>' . $result['mail']  . '</td>
+                <td><a href="/?p=user&u=' . $result['uid']  . '">' . $result['mail']  . '</a></td>
                 <td>' . $result['bio']  . '</td>
               </tr>';
   }
@@ -130,4 +135,26 @@ function theme_page_logout() {
   global $body;
   session_destroy();
   $body .= "You are now logged out.";
+}
+
+function theme_page_user() {
+  global $body;
+  if (!isset($_GET['u'])) {
+    $body .= 'No user selected';
+    return;
+  }
+  $uid = $_GET['u'];
+  $sql = "SELECT uid, mail, bio, created FROM users WHERE uid='{$uid}';";
+  print '<br>' . $sql;
+  $query = mysql_database_query($sql);
+  $result = mysql_database_get_results($query);
+  if (empty($result)) {
+    $body .= 'User ' . $uid  . ' does not exist';
+    return;
+  }
+  print_r($result);
+  $user = current($result);
+  $body .= "<h2>{$user['mail']}</h2>";
+  $body .= '<span>Joined ' . date("m/d/Y", $user['created'])  . '</span>';
+  $body .= '<p>' . $user['bio']  . '</p>';
 }
