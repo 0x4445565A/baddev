@@ -128,6 +128,9 @@ function theme_page_register() {
         $body .= '<div class="alert alert-danger" role="alert">Not a valid email address</div>';
       }
       else {
+        $pass = md5($_POST['password']);
+        $sql = "INSERT INTO users (mail, password, bio, created) VALUES ('{$_POST['mail']}', '{$pass}', '{$_POST['bio']}', unix_timestamp(now()))";
+        $query = mysql_database_query($sql);
         $body .= '<div class="alert alert-success" role="alert">' . $_POST['mail']  . ' is now registered!</div>';
       }
     }
