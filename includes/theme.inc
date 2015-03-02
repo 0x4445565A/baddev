@@ -113,6 +113,34 @@ function theme_page_login() {
             </form>';
 }
 
+function theme_page_register() {
+  global $body;
+  if (isset($_POST['mail'])
+  || isset($_POST['password'])
+  || isset($_POST['bio'])) {
+    if (empty($_POST['mail'])
+    ||  empty($_POST['password'])
+    ||  empty($_POST['bio'])) {
+      $body .= '<div class="alert alert-danger" role="alert"><b>Please fill out the whole form!</b></div>';
+    }
+    else {
+      if (!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) {
+        $body .= '<div class="alert alert-danger" role="alert">Not a valid email address</div>';
+      }
+      else {
+        $body .= '<div class="alert alert-success" role="alert">' . $_POST['mail']  . ' is now registered!</div>';
+      }
+    }
+  }
+  $body .= '<form action="?p=register" method="POST" class="form-register" id="register">
+            <h2 class="form-register-heading">Register New User</h2>
+            <input type="text" name="mail" class="form-control" placeholder="Email"><br>
+            <input type="password" name="password" class="form-control" placeholder="Password"><br>
+            <textarea class="form-control" rows="4" cols="50" name="bio" form="register" placeholder="Bio..."></textarea><br>
+            <input type="submit" class="btn btn-success btn-block">
+            </form>';
+}
+
 function theme_page_list() {
   global $body;
   $query = mysql_database_query("SELECT uid, mail, bio FROM users;");
