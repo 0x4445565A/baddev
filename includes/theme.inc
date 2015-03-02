@@ -208,9 +208,25 @@ function theme_page_user_edit() {
     $body .= 'Please log in to edit user form';
     return;
   }
-  $body .= 'Show edit form';
+  if (isset($_POST['bio']) && !empty($_POST['bio'])) {
+    mysql_database_query('UPDATE users SET bio="' . $_POST['bio'] . '" WHERE uid="' . $_SESSION['uid']  . '"');
+    $body .= '<div class="alert alert-success" role="alert">User bio updated</div>';
+  }
+
+  if (isset($_POST['password']) && !empty($_POST['password'])) {
+    $password = md5($_POST['password']);
+    mysql_database_query('UPDATE users SET password="' . $password . '" WHERE uid="' . $_SESSION['uid']  . '"');
+    $body .= '<div class="alert alert-success" role="alert">User password updated</div>';
+  }
+ 
   $sql = "SELECT * FROM users WHERE uid={$_SESSION['uid']}";
   $query = mysql_database_query($sql);
   $result = mysql_database_get_results($query);
-  print_r($result);
+  $user = current($result);
+  $body .= '<form action="?p=user-edit" method="POST" class="form-user-edit" id="user-edit">
+            <h2 class="form-user-edit-heading">Edit User ' . $user['mail'] . '</h2>
+            <input type="password" name="password" class="form-control" placeholder="Password"><br>
+            <textarea class="form-control" rows="4" cols="50" name="bio" form="user-edit" placeholder="Bio...">' . $user['bio']  . '</textarea><br>
+            <input type="submit" class="btn btn-success btn-block">
+            </form>';
 }
