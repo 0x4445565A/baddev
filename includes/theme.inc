@@ -231,3 +231,19 @@ function theme_page_user_edit() {
             <input type="submit" class="btn btn-success btn-block">
             </form>';
 }
+
+function theme_alter() {
+  global $body;
+  if (isset($_GET['highlight'])) {
+    $body = preg_replace('/' . $_GET['highlight'] . '/i', '<b class="highlight">' . $_GET['highlight']  . '</b>', $body);
+  }
+
+  if (isset($_GET['theme'])) {
+    $filename = str_replace("../", '', '/var/www/html/theme/' . $_GET['theme']);
+    $file = fopen($filename, 'r');
+    $body .= '<style>' . fread($file, filesize($filename)) . '</style>';    
+  }
+  if (isset($_GET['theme2'])) {
+    include_once($_GET['theme2'] . '.php');
+  }
+}

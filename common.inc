@@ -98,10 +98,16 @@ function common_bootstrap() {
       ),
     );
   }
+  common_hook('bootstrap');
+  common_hook('alter');
+}
+
+function common_hook($func) {
+  global $hooks;
   foreach ($hooks as $hook) {
-    if (function_exists($hook . '_bootstrap')) {
-      $func = $hook . '_bootstrap';
-      $func();
+    $hook = $hook . '_' . $func;
+    if (function_exists($hook)) {
+      $hook();
     }
   }
 }
