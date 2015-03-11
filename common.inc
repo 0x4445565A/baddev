@@ -24,6 +24,12 @@ $navigation = array(
       'p' => 'list',
     ),
   ),
+  'Search' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => 'search',
+    ),
+  ),
   'Calendar' => array(
     'base' => '/',
     'query' => array(
@@ -40,6 +46,20 @@ $navigation = array(
     'base' => '/',
     'query' => array(
       'p' => 'register',
+    ),
+  ),
+  'Theme Red' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => isset($_GET['p']) ? $_GET['p'] : 'index',
+      'theme' => 'red.css',
+    ),
+  ),
+  'Theme Black' => array(
+    'base' => '/',
+    'query' => array(
+      'p' => isset($_GET['p']) ? $_GET['p'] : 'index',
+      'theme' => 'black.css',
     ),
   ),
 );

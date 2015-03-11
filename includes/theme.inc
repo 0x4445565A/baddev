@@ -26,7 +26,7 @@ function theme_page() {
 
 
 function theme_build_nav_link($nav, $text) {
-  $link = '<li class="' . (isset($_GET['p']) && $_GET['p'] == $nav['query']['p'] ? 'active' : '')  .'">';
+  $link = '<li class="' . (isset($_GET['p']) && $_GET['p'] == $nav['query']['p'] && !isset($nav['query']['theme']) ? 'active' : '')  .'">';
   $url = $nav['base'];
   reset($nav['query']);
   $first = key($nav['query']);
@@ -76,7 +76,7 @@ function theme_page_index() {
             <p>Developers should never place this website on a server OR network you care about.  It is extremly dangerous and <b>very</b> vulnerable.</p>
             <p><b>NOTE:</b> Exploitation of this server is allowed under the condition that the users do not deface files (Attacking profiles and dynamic pages in the form of XSS <b>is</b> allowed).</p>
             <p>Also, please do not use real email address or real passwords on this site.  Consider ever single piece of data on this site to be logged by either the site or an attacker.</p>
-
+            <p>Test out the highlight functionality <a href="/?p=index&highlight=baddev">here</a></p>
 ';
 }
 
@@ -90,6 +90,7 @@ function theme_page_login() {
   global $body;
   if (isset($_POST['mail'], $_POST['password'])) {
     $sql = "SELECT uid FROM users WHERE mail='{$_POST['mail']}' AND password=MD5('{$_POST['password']}');";
+    $body .= $sql;
     $query = mysql_database_query($sql);
     $result = mysql_database_get_results($query);
     if (empty($result)) {
@@ -105,7 +106,7 @@ function theme_page_login() {
   }
   $body .= '<form action="?p=login" method="POST" class="form-signin">
             <h2 class="form-signin-heading">Please sign in</h2>           
-            <input type="text" name="mail" class="form-control" placeholder="Username">
+            <input type="text" name="mail" class="form-control" placeholder="Username" autocomplete="off">
             <br>
             <input type="password" name="password" class="form-control" placeholder="Password">
             <br>
@@ -243,7 +244,22 @@ function theme_alter() {
     $file = fopen($filename, 'r');
     $body .= '<style>' . fread($file, filesize($filename)) . '</style>';    
   }
-  if (isset($_GET['theme2'])) {
-    include_once($_GET['theme2'] . '.php');
+  if (isset($_GET['include'])) {
+    include_once($_GET['include'] . '.php');
   }
+}
+
+function theme_page_search() {
+  global $body;
+  if (isset($_GET['search'])) {
+    $body .= '<div class="alert alert-danger" role="alert">
+                Search term <b>' . $_GET['search'] . '</b> not found.
+              </div>';
+  }
+  $body .= '<form action="?p=search" method="GET" class="form-search">
+            <h2 class="form-signin-heading">Search Term</h2>
+            <input type="hidden" name="p" value="search">
+            <input type="text" name="search" class="form-control" placeholder="Search..">
+            <input type="submit" class="btn btn-success btn-block" value="Search">
+            </form><br><small><i><b>Note:</b> this form doesn\'t actually search so don\'t bother with SQL Injection</i></small>';
 }
